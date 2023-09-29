@@ -1,1 +1,1 @@
-This is a notion-clone application integrated with ai.
+This is a notion like app integrated with ai.
