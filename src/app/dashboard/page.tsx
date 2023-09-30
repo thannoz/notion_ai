@@ -30,6 +30,10 @@ const Dashboard = () => {
         <div className="h-8"></div>
 
         {/* list of all notes */}
+
+        <div className="text-center">
+          <h2 className="text-xl text-gray-500">You have no notes yet</h2>
+        </div>
       </div>
     </div>
   );
