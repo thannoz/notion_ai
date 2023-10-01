@@ -18,6 +18,10 @@ const CreateNoteDialog = () => {
     setInput(e.target.value);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <Dialog>
       <DialogTrigger>
@@ -30,7 +34,7 @@ const CreateNoteDialog = () => {
           <h2 className="font-semibold text-blue-600 sm:mt-2">New Note Book</h2>
         </div>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="bg-gray-100">
         <DialogHeader>
           <DialogTitle>New Note Book</DialogTitle>
           <DialogDescription>
@@ -38,7 +42,7 @@ const CreateNoteDialog = () => {
           </DialogDescription>
         </DialogHeader>
 
-        <form action="">
+        <form onSubmit={handleSubmit}>
           <Input
             value={input}
             onChange={onChangeHandler}
@@ -47,10 +51,10 @@ const CreateNoteDialog = () => {
           />
           <div className="h-4"></div>
           <div className="flex items-center gap-3">
-            <Button type="reset" variant={"secondary"}>
+            <Button type="reset" variant={"outline"}>
               Cancel
             </Button>
-            <Button type="submit" className="bg-blue-500">
+            <Button type="submit" className="bg-indigo-500">
               Create
             </Button>
           </div>

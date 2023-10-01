@@ -1,10 +1,11 @@
-import CreateNoteDialog from "@/components/CreateNoteDialog";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { UserButton } from "@clerk/nextjs";
-import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { UserButton } from "@clerk/nextjs";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+
+import CreateNoteDialog from "@/components/CreateNoteDialog";
 
 const Dashboard = () => {
   return (
