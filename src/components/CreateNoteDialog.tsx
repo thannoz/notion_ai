@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import {
   Dialog,
   DialogContent,
@@ -8,18 +10,44 @@ import {
   DialogHeader,
 } from "./ui/dialog";
 import { DialogTitle, DialogTrigger } from "@radix-ui/react-dialog";
-import { Plus } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { useMutation } from "@tanstack/react-query";
 
 const CreateNoteDialog = () => {
+  const router = useRouter();
   const [input, setInput] = useState<string>("");
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
+  const createNoteBook = useMutation({
+    mutationFn: async () => {
+      const res = await axios.post("/api/createNoteBook", {
+        name: input,
+      });
+      return res.data;
+    },
+  });
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (input === "") {
+      window.alert("Please enter a name for your notebook");
+    }
+
+    createNoteBook.mutate(undefined, {
+      onSuccess: ({ note_id }) => {
+        console.log("new note created successfully");
+        router.push(`/notebooks/${note_id}`);
+      },
+      onError: (error) => {
+        console.error(error);
+        window.alert("Failed to create new notebook");
+      },
+    });
   };
 
   return (
@@ -54,7 +82,14 @@ const CreateNoteDialog = () => {
             <Button type="reset" variant={"outline"}>
               Cancel
             </Button>
-            <Button type="submit" className="bg-indigo-500">
+            <Button
+              type="submit"
+              className="bg-indigo-500"
+              disabled={createNoteBook.isLoading}
+            >
+              {createNoteBook.isLoading && (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              )}
               Create
             </Button>
           </div>

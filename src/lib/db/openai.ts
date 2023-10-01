@@ -40,7 +40,7 @@ export const generateImage = async (img_description: string) => {
       size: "256x256",
     });
     const data = await res.json();
-    const img_url = data.choices[0].url;
+    const img_url = data.data[0].url;
     return img_url as string;
   } catch (error) {
     console.log(error);
