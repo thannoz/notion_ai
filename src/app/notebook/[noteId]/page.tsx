@@ -1,3 +1,4 @@
+import TipTapEditor from "@/components/TipTapEditor";
 import { Button } from "@/components/ui/button";
 import { clerk } from "@/lib/clerk-server";
 import { db } from "@/lib/db";
@@ -50,6 +51,10 @@ const NotebookPage: FC<Props> = async ({ params: { noteId } }) => {
 
         <div className="w-5"></div>
         {/* EDITOR GOES HERE */}
+
+        <div className="border-stone-200 shadow-xl border rounded-lg px-16 py-8 w-full">
+          <TipTapEditor note={note} />
+        </div>
       </div>
     </div>
   );
