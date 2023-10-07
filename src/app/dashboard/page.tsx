@@ -1,13 +1,22 @@
 import Link from "next/link";
 import React from "react";
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, auth } from "@clerk/nextjs";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 import CreateNoteDialog from "@/components/CreateNoteDialog";
+import { db } from "@/lib/db";
+import { $notes } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 
-const Dashboard = () => {
+const Dashboard = async () => {
+  const { userId } = auth();
+  const notes = await db
+    .select()
+    .from($notes)
+    .where(eq($notes.userId, userId!));
+
   return (
     <div className="bg-gradient-to-r min-h-screen from-blue-200 to-indigo-300">
       <div className="max-w-7xl mx-auto p-10">
@@ -31,16 +40,30 @@ const Dashboard = () => {
         <Separator />
         <div className="h-8"></div>
 
-        {/* list of all notes */}
-
-        <div className="text-center">
-          <h2 className="text-xl text-gray-500">You have no notes yet</h2>
-        </div>
+        {/* if no notes available */}
+        {notes.length === 0 && (
+          <div className="text-center">
+            <h2 className="text-xl text-gray-500">You have no notes yet</h2>
+          </div>
+        )}
 
         {/* display of the notes */}
 
         <div className="grid sm:grid-cols-3 md:grid-cols-5">
           <CreateNoteDialog />
+
+          {notes.map((note) => (
+            <a href={`/notes/${note.id}`} key={note.id}>
+              <div className="overflow-hidden flex flex-col hover:shadow-xl transition hover:-translate-y-1">
+                <img
+                  src={note.imageUrl}
+                  alt={note.name}
+                  width={400}
+                  height={200}
+                />
+              </div>
+            </a>
+          ))}
         </div>
       </div>
     </div>

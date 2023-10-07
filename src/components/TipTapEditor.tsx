@@ -33,7 +33,7 @@ const TipTapEditor = ({ note }: Props) => {
     addKeyboardShortcuts() {
       return {
         "Shift-a": () => {
-          // take the last 30 words
+          // take the last 30 words from the editor and use it to autocomplete
           const prompt = this.editor.getText().split(" ").slice(-30).join(" ");
           complete(prompt);
           return true;
