@@ -41,7 +41,7 @@ const CreateNoteDialog = () => {
     createNoteBook.mutate(undefined, {
       onSuccess: ({ note_id }) => {
         console.log("new note created successfully");
-        router.push(`/notebooks/${note_id}`);
+        router.push(`/notebook/${note_id}`);
       },
       onError: (error) => {
         console.error(error);

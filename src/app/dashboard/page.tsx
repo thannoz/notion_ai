@@ -53,14 +53,22 @@ const Dashboard = async () => {
           <CreateNoteDialog />
 
           {notes.map((note) => (
-            <a href={`/notes/${note.id}`} key={note.id}>
-              <div className="overflow-hidden flex flex-col hover:shadow-xl transition hover:-translate-y-1">
+            <a href={`/notebook/${note.id}`} key={note.id}>
+              <div className="border border-stone-300 rounded-lg overflow-hidden flex flex-col hover:shadow-xl transition hover:-translate-y-1">
                 <img
                   src={note.imageUrl}
                   alt={note.name}
                   width={400}
                   height={200}
                 />
+                <div className="p-4"></div>
+                <h3 className="text-xl font-semibold text-gray-900">
+                  {note.name}
+                </h3>
+                <div className="h-1"></div>
+                <p className="text-sm text-gray-500">
+                  {new Date(note.createdAt).toLocaleDateString()}
+                </p>
               </div>
             </a>
           ))}
