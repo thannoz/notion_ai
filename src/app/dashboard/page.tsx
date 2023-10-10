@@ -9,6 +9,7 @@ import CreateNoteDialog from "@/components/CreateNoteDialog";
 import { db } from "@/lib/db";
 import { $notes } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
+import Image from "next/image";
 
 const Dashboard = async () => {
   const { userId } = auth();
@@ -47,16 +48,16 @@ const Dashboard = async () => {
           </div>
         )}
 
-        {/* display of the notes */}
+        {/* display all notes */}
 
-        <div className="grid sm:grid-cols-3 md:grid-cols-5">
+        <div className="grid sm:grid-cols-3 md:grid-cols-5 grid-cols-1 gap-4">
           <CreateNoteDialog />
 
           {notes.map((note) => (
             <a href={`/notebook/${note.id}`} key={note.id}>
               <div className="border border-stone-300 rounded-lg overflow-hidden flex flex-col hover:shadow-xl transition hover:-translate-y-1">
-                <img
-                  src={note.imageUrl}
+                <Image
+                  src={note.imageUrl || ""}
                   alt={note.name}
                   width={400}
                   height={200}

@@ -22,6 +22,15 @@ const CreateNoteDialog = () => {
     setInput(e.target.value);
   };
 
+  const uploadToFirebase = useMutation({
+    mutationFn: async (noteId: string) => {
+      const res = await axios.post("/api/uploadToFirebase", {
+        noteId,
+      });
+      return res.data;
+    },
+  });
+
   const createNoteBook = useMutation({
     mutationFn: async () => {
       const res = await axios.post("/api/createNoteBook", {
@@ -41,6 +50,7 @@ const CreateNoteDialog = () => {
     createNoteBook.mutate(undefined, {
       onSuccess: ({ note_id }) => {
         console.log("new note created successfully");
+        uploadToFirebase.mutate(note_id);
         router.push(`/notebook/${note_id}`);
       },
       onError: (error) => {
