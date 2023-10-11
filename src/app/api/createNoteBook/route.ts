@@ -4,6 +4,8 @@ import { $notes } from "@/lib/db/schema";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
+export const runtime = "edge";
+
 /*
 1. we get the image description from the model
 2. we generate the image based on the image description
